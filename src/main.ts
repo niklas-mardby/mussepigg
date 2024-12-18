@@ -1,11 +1,18 @@
-type DisneyCharacter = {
-	info: CharacterAPIInfo;
+type APIResponseObject = {
+	info: APIResponseInfo;
 	data: CharacterData;
 };
 
-type DisneyCharacters = {
-	info: CharacterAPIInfo;
+type APIResponseArray = {
+	info: APIResponseInfo;
 	data: CharacterData[];
+};
+
+type APIResponseInfo = {
+	count: number;
+	totalPages: number;
+	previousPage: null | string;
+	nextPage: null | string;
 };
 
 type CharacterData = {
@@ -26,17 +33,10 @@ type CharacterData = {
 	__v: number;
 };
 
-type CharacterAPIInfo = {
-	count: number;
-	totalPages: number;
-	previousPage: null | string;
-	nextPage: null | string;
-};
-
 const getDisneyCharacterNameById = async (id: number): Promise<string> => {
 	// hämta character på dess id
 	const response = await fetch(`https://api.disneyapi.dev/character/${id}`);
-	const data = (await response.json()) as DisneyCharacter;
+	const data = (await response.json()) as APIResponseObject;
 
 	// returnera namnet
 	return data.data.name;
@@ -48,7 +48,7 @@ const searchDisneyCharacterByName = async (
 	const response = await fetch(
 		`https://api.disneyapi.dev/character?name=${search}`
 	);
-	const data = (await response.json()) as DisneyCharacters;
+	const data = (await response.json()) as APIResponseArray;
 
 	return data.data;
 };
@@ -60,7 +60,7 @@ const searchDisneyCharacter = async (
 	const response = await fetch(
 		`https://api.disneyapi.dev/character?${param}=${search}`
 	);
-	const data = (await response.json()) as DisneyCharacters;
+	const data = (await response.json()) as APIResponseArray;
 
 	return data.data;
 };
