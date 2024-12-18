@@ -53,7 +53,21 @@ const searchDisneyCharacterByName = async (
 	return data.data;
 };
 
+const searchDisneyCharacter = async (
+	param: string,
+	search: string
+): Promise<CharacterData[]> => {
+	const response = await fetch(
+		`https://api.disneyapi.dev/character?${param}=${search}`
+	);
+	const data = (await response.json()) as DisneyCharacters;
+
+	return data.data;
+};
+
 // här är synkron kod
 console.log(await getDisneyCharacterNameById(308));
 
 console.log(await searchDisneyCharacterByName("peter"));
+
+console.log(await searchDisneyCharacter("films", "tangled"));
