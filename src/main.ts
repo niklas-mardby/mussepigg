@@ -29,8 +29,8 @@ type CharacterData = {
 type CharacterAPIInfo = {
 	count: number;
 	totalPages: number;
-	previousPage: null;
-	nextPage: null;
+	previousPage: null | string;
+	nextPage: null | string;
 };
 
 const getDisneyCharacterNameById = async (id: number): Promise<string> => {
