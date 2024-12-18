@@ -1,3 +1,5 @@
+import "./styles.css";
+
 type APIResponseObject = {
 	info: APIResponseInfo;
 	data: CharacterData;
