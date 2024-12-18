@@ -3,6 +3,11 @@ type DisneyCharacter = {
 	data: CharacterData;
 };
 
+type DisneyCharacters = {
+	info: CharacterAPIInfo;
+	data: CharacterData[];
+};
+
 type CharacterData = {
 	_id: number;
 	films: string[];
@@ -37,5 +42,18 @@ const getDisneyCharacterNameById = async (id: number): Promise<string> => {
 	return data.data.name;
 };
 
+const searchDisneyCharacterByName = async (
+	search: string
+): Promise<CharacterData[]> => {
+	const response = await fetch(
+		`https://api.disneyapi.dev/character?name=${search}`
+	);
+	const data = (await response.json()) as DisneyCharacters;
+
+	return data.data;
+};
+
 // här är synkron kod
 console.log(await getDisneyCharacterNameById(308));
+
+console.log(await searchDisneyCharacterByName("peter"));
